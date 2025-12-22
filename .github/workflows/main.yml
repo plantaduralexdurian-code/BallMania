@@ -1,15 +1,21 @@
-name: Build APK
-on: push
+name: Build Ball Mania
+on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ArtemSBulgakov/buildozer-action@v1
+
+      - name: Buildozer Action
+        uses: ArtemSerebrennkov/buildozer-action@v1
         with:
-          command: buildozer android debug
-      - uses: actions/upload-artifact@v2
+          workdir: .
+          buildozer_version: master
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
         with:
-          name: BallMania-APK
+          name: Ball-Mania-APK
           path: bin/*.apk
           
