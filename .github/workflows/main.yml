@@ -3,18 +3,26 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout del código
         uses: actions/checkout@v4
 
-      - name: Buildozer Action
-        uses: Niklas-S-O/buildozer-action@v1.1
-        with:
-          workdir: .
-          buildozer_version: master
+      - name: Instalar dependencias del sistema
+        run: |
+          sudo apt update
+          sudo apt install -y python3-pip build-essential git python3-dev ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev libgstreamer1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good
 
-      - name: Subir APK
+      - name: Instalar Buildozer
+        run: pip3 install --user buildozer
+
+      - name: Compilar APK con Buildozer
+        run: |
+          export PATH=$PATH:$HOME/.local/bin
+          buildozer android debug
+        # Nota: Esto tardará unos 15-20 minutos. No lo canceles.
+
+      - name: Subir APK generado
         uses: actions/upload-artifact@v4
         with:
           name: Ball-Mania-APK
