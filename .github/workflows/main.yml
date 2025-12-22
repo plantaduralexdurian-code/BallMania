@@ -9,12 +9,12 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Buildozer Action
-        uses: kucaahbe/buildozer-action@v2
+        uses: Niklas-S-O/buildozer-action@v1.1
         with:
           workdir: .
           buildozer_version: master
 
-      - name: Upload APK
+      - name: Subir APK
         uses: actions/upload-artifact@v4
         with:
           name: Ball-Mania-APK
